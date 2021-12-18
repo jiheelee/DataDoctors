@@ -1,7 +1,7 @@
 /*
 ##################################################################################################################################################################################################
 2021.07.25
-¹®21)»ç¿ø_ºÎ¼­ È¯°æ¼³Á¤
+ë¬¸21)ì‚¬ì›_ë¶€ì„œ í™˜ê²½ì„¤ì •
 ##################################################################################################################################################################################################
 */
 drop table SQLP_JS.t_emp;
@@ -66,20 +66,20 @@ EXECUTE DBMS_STATS.GATHER_TABLE_STATS('SQLP_JS', 'T_DEPT');
 /*
 ##################################################################################################################################################################################################
 2021.07.25
-¹®21)»ç¿ø_ºÎ¼­ ±âº»¹®Á¦
+ë¬¸21)ì‚¬ì›_ë¶€ì„œ ê¸°ë³¸ë¬¸ì œ
 ##################################################################################################################################################################################################
 */
-/*  Å×ÀÌºí 
-       - »ç¿ø (¾à10¸¸°Ç), ºÎ¼­(100°Ç)
+/*  í…Œì´ë¸” 
+       - ì‚¬ì› (ì•½10ë§Œê±´), ë¶€ì„œ(100ê±´)
 
     INDEX 
-       - »ç¿øPK : EMP_NO   
-       - ºÎ¼­PK : DEPT_CODE
+       - ì‚¬ì›PK : EMP_NO   
+       - ë¶€ì„œPK : DEPT_CODE
 
-¾Æ·¡ SQLÀ» Æ©´× ÇÏ¼¼¿ä.
+ì•„ëž˜ SQLì„ íŠœë‹ í•˜ì„¸ìš”.
 
-  ¹®Á¦ 1) E.DIV_CODE='01'ÀÇ °á°ú : 10°Ç,   D.LOC='01'ÀÇ °á°ú 30°Ç
-  ¹®Á¦ 2) E.DIV_CODE='01'ÀÇ °á°ú : 100°Ç,   D.LOC='01'ÀÇ °á°ú 3°Ç
+  ë¬¸ì œ 1) E.DIV_CODE='01'ì˜ ê²°ê³¼ : 10ê±´,   D.LOC='01'ì˜ ê²°ê³¼ 30ê±´
+  ë¬¸ì œ 2) E.DIV_CODE='01'ì˜ ê²°ê³¼ : 100ê±´,   D.LOC='01'ì˜ ê²°ê³¼ 3ê±´
 
 
 */
@@ -131,11 +131,11 @@ Predicate Information (identified by operation id):
 /*
 ##################################################################################################################################################################################################
 2021.07.25
-¹®21)»ç¿ø_ºÎ¼­ ¹®Á¦Ç®ÀÌ
+ë¬¸21)ì‚¬ì›_ë¶€ì„œ ë¬¸ì œí’€ì´
 ##################################################################################################################################################################################################
 */
 
-#ÇöÀç
+#í˜„ìž¬
 SELECT  /*+ GATHER_PLAN_STATISTICS 
             ORDERED USE_NL(D) */
         E.EMP_NO,  E.EMP_NAME,  E.DIV_CODE,  
@@ -145,35 +145,35 @@ WHERE D.DEPT_CODE   = E.DEPT_CODE
  AND  E.DIV_CODE    = '01' 
  AND  D.LOC         = '01';
 
-#ÇØ¼®
+#í•´ì„
 INDEX : E.EMP_NO , D.DEPT_CODE
-ORDER : µå¶óÀÌºù E, ÀÌ³Ê D
+ORDER : ë“œë¼ì´ë¹™ E, ì´ë„ˆ D
 
-FROM E : ÇÊ¿äÇÑ E¸¸ °¡Á®¿À°í ½ÍÀ½.
-- EÀÇ DIV_CODE ÀÌ¿ë? -> E.DIV_CODE = '01' °¡Á®¿Ã ¼ö ÀÖ³ª? -> ÇØ´ç INDEX ¾øÀ½. ºÒ°¡.
-- EÀÇ EMP_NO ÀÌ¿ë? -> WHEREÀý¿¡¼­ »ç¿ë ¾ÈµÊ -> FULL_CSAN °ú µ¿ÀÏ
-- DÀÇ PK_T_DEPT(DEPT_CODE) ÀÌ¿ë? -> JOINÁ¶°Ç E.DEPT_CODE = D.DEPT_CODE ÀÓÀ¸·Î (O)
-WHERE E : E¸¦ °¡Á®¿À¸é¼­ FILTER
+FROM E : í•„ìš”í•œ Eë§Œ ê°€ì ¸ì˜¤ê³  ì‹¶ìŒ.
+- Eì˜ DIV_CODE ì´ìš©? -> E.DIV_CODE = '01' ê°€ì ¸ì˜¬ ìˆ˜ ìžˆë‚˜? -> í•´ë‹¹ INDEX ì—†ìŒ. ë¶ˆê°€.
+- Eì˜ EMP_NO ì´ìš©? -> WHEREì ˆì—ì„œ ì‚¬ìš© ì•ˆë¨ -> FULL_CSAN ê³¼ ë™ì¼
+- Dì˜ PK_T_DEPT(DEPT_CODE) ì´ìš©? -> JOINì¡°ê±´ E.DEPT_CODE = D.DEPT_CODE ìž„ìœ¼ë¡œ (O)
+WHERE E : Eë¥¼ ê°€ì ¸ì˜¤ë©´ì„œ FILTER
 - E.DIV_CODE = '01'
-¹®Á¦Á¡ ºÐ¼® :
-- ´õºí ÀÎµ¦½º È¿°ú -> ÇÊ¿ä¿¡ µû¶ó È¿°úÀû, ÀÎµ¦½º¸¦ »õ·Î Ãß°¡ÇÒ ¼ö ¾øÀ»½Ã ±¦ÂúÀ½. (ÆÄÆ¼¼ÇÀ» ³ª´©´Â È¿°ú?)
-- PK_T_DEPT(DEPT_CODE)¸¦ µå¶óÀÌºùÀ¸·Î µÎ°í, T_EMP¸¦ NL·Î Ã£±â¿¡ È¿À²ÀûÀÌÁö ¸øÇÔ(TALBE ACCESS FULL) -> INDEX·Î T_EMP(E.DEPT_CODE)¸¦ µÎ´Â °ÍÀ» ÃßÃµ #Æ²¸²#µå¶óÀÌºù À§Ä¡ ¹Ý´ëÀÓ¤»¤»#
-- ¾ÖÃÊ¿¡ T_EMP(E.DIV_CODE) INDEX¸¦ °¡Áö°í ÀÖ¾ú´Ù¸é?
+ë¬¸ì œì  ë¶„ì„ :
+- ë”ë¸” ì¸ë±ìŠ¤ íš¨ê³¼ -> í•„ìš”ì— ë”°ë¼ íš¨ê³¼ì , ì¸ë±ìŠ¤ë¥¼ ìƒˆë¡œ ì¶”ê°€í•  ìˆ˜ ì—†ì„ì‹œ ê´œì°®ìŒ. (íŒŒí‹°ì…˜ì„ ë‚˜ëˆ„ëŠ” íš¨ê³¼?)
+- PK_T_DEPT(DEPT_CODE)ë¥¼ ë“œë¼ì´ë¹™ìœ¼ë¡œ ë‘ê³ , T_EMPë¥¼ NLë¡œ ì°¾ê¸°ì— íš¨ìœ¨ì ì´ì§€ ëª»í•¨(TALBE ACCESS FULL) -> INDEXë¡œ T_EMP(E.DEPT_CODE)ë¥¼ ë‘ëŠ” ê²ƒì„ ì¶”ì²œ #í‹€ë¦¼#ë“œë¼ì´ë¹™ ìœ„ì¹˜ ë°˜ëŒ€ìž„ã…‹ã…‹#
+- ì• ì´ˆì— T_EMP(E.DIV_CODE) INDEXë¥¼ ê°€ì§€ê³  ìžˆì—ˆë‹¤ë©´?
 
-FROM D : ÇÊ¿äÇÑ D¸¸ °¡Á®¿À°í ½ÍÀ½.
-- DÀÇ LOC ÀÌ¿ë? -> D.LOC = '01' °¡Á®¿Ã ¼ö ÀÖ³ª? -> ÇØ´ç INDEX ¾øÀ½. ºÒ°¡.
-- DÀÇ DEPT_CODEÀÌ¿ë? -> WHEREÀý¿¡¼­ »ç¿ëÇÔ JOIN Á¶°Ç E.DEPT_CODE = D.DEPT_CODE, ½ºÄ®¶ó Á¶°ÇÀº ¾øÀ½. -> FULL_SCAN°ú µ¿ÀÏ -> TABLE ACCESS BY INDEX ROWID #
-WHERE D : D¸¦ °¡Á®¿À¸é¼­ FILTER
+FROM D : í•„ìš”í•œ Dë§Œ ê°€ì ¸ì˜¤ê³  ì‹¶ìŒ.
+- Dì˜ LOC ì´ìš©? -> D.LOC = '01' ê°€ì ¸ì˜¬ ìˆ˜ ìžˆë‚˜? -> í•´ë‹¹ INDEX ì—†ìŒ. ë¶ˆê°€.
+- Dì˜ DEPT_CODEì´ìš©? -> WHEREì ˆì—ì„œ ì‚¬ìš©í•¨ JOIN ì¡°ê±´ E.DEPT_CODE = D.DEPT_CODE, ìŠ¤ì¹¼ë¼ ì¡°ê±´ì€ ì—†ìŒ. -> FULL_SCANê³¼ ë™ì¼ -> TABLE ACCESS BY INDEX ROWID #
+WHERE D : Dë¥¼ ê°€ì ¸ì˜¤ë©´ì„œ FILTER
 - D.LOC = '01'
-¹®Á¦Á¡ ºÐ¼® :
-- ¾ÖÃÊ¿¡ T_DEPT(D.LOC) INDEX¸¦ °¡Áö°í ÀÖ¾ú´Ù¸é?
+ë¬¸ì œì  ë¶„ì„ :
+- ì• ì´ˆì— T_DEPT(D.LOC) INDEXë¥¼ ê°€ì§€ê³  ìžˆì—ˆë‹¤ë©´?
 
 
-#Ç®ÀÌ
-¹®Á¦ 1) E.DIV_CODE='01'ÀÇ °á°ú : 10°Ç,   D.LOC='01'ÀÇ °á°ú 30°Ç
-- EÀÇ °á°ú°¡ ´õ ÀûÀ¸¹Ç·Î µå¶óÀÌºù Å×ÀÌºí ¼ø¼­ À¯Áö
-- FROM EÀÇ °á°ú°¡ ÇÊÅÍ¸¦ Á¦¿ÜÇÏ°í ´õ Àû°Ô ³ª¿Ã ¼ö ÀÖµµ·Ï, INDEX·Î T_EMP(E.DEPT_CODE)¸¦ Ãß°¡.
-- FROM DÀÇ °á°ú°¡ ÇÊÅÍ¸¦ Á¦¿ÜÇÏ°í ´õ Àû°Ô ³ª¿Ã ¼ö ÀÖµµ·Ï, INDEX·Î T_DEPT(D.LOC)¸¦ Ãß°¡. + ÀÌ³Ê Å×ÀÌºíÀÓÀ¸·Î JOINÀ» À§ÇÑ INDEX KEY·Î D.DEPT_CODE Ãß°¡
+#í’€ì´
+ë¬¸ì œ 1) E.DIV_CODE='01'ì˜ ê²°ê³¼ : 10ê±´,   D.LOC='01'ì˜ ê²°ê³¼ 30ê±´
+- Eì˜ ê²°ê³¼ê°€ ë” ì ìœ¼ë¯€ë¡œ ë“œë¼ì´ë¹™ í…Œì´ë¸” ìˆœì„œ ìœ ì§€
+- FROM Eì˜ ê²°ê³¼ê°€ í•„í„°ë¥¼ ì œì™¸í•˜ê³  ë” ì ê²Œ ë‚˜ì˜¬ ìˆ˜ ìžˆë„ë¡, INDEXë¡œ T_EMP(E.DEPT_CODE)ë¥¼ ì¶”ê°€.
+- FROM Dì˜ ê²°ê³¼ê°€ í•„í„°ë¥¼ ì œì™¸í•˜ê³  ë” ì ê²Œ ë‚˜ì˜¬ ìˆ˜ ìžˆë„ë¡, INDEXë¡œ T_DEPT(D.LOC)ë¥¼ ì¶”ê°€. + ì´ë„ˆ í…Œì´ë¸”ìž„ìœ¼ë¡œ JOINì„ ìœ„í•œ INDEX KEYë¡œ D.DEPT_CODE ì¶”ê°€
 
 SOL);
 CREATE INDEX SQLP_JS.IX_T_EMP_01 ON SQLP_JS.T_EMP(DEPT_CODE);
@@ -193,10 +193,10 @@ select * from table(dbms_xplan.display_cursor(null,null, 'allstats last'));
 DROP INDEX SQLP_JS.IX_T_EMP_01 ;
 DROP INDEX SQLP_JS.IX_T_DEPT_01 ;
 
-¹®Á¦ 2) E.DIV_CODE='01'ÀÇ °á°ú : 100°Ç,   D.LOC='01'ÀÇ °á°ú 3°Ç
-- DÀÇ °á°ú°¡ ´õ ÀûÀ¸¹Ç·Î µå¶óÀÌºù ¼ø¼­ º¯°æ -> D E
-- FROM DÀÇ °á°ú°¡ ÇÊÅÍ¸¦ Á¦¿ÜÇÏ°í ´õ Àû°Ô ³ª¿Ã ¼ö ÀÖµµ·Ï, INDEX·Î T_DEPT(D.LOC)¸¦ Ãß°¡.
-- FROM EÀÇ °á°ú°¡ ÇÊÅÍ¸¦ Á¦¿ÜÇÏ°í ´õ Àû°Ô ³ª¿Ã ¼ö ÀÖµµ·Ï, INDEX·Î T_EMP(E.DIV_CODE)¸¦ Ãß°¡. + ÀÌ³Ê Å×ÀÌºíÀÓÀ¸·Î JOINÀ» À§ÇÑ INDEX KEY·Î E.DEPT_CODE Ãß°¡
+ë¬¸ì œ 2) E.DIV_CODE='01'ì˜ ê²°ê³¼ : 100ê±´,   D.LOC='01'ì˜ ê²°ê³¼ 3ê±´
+- Dì˜ ê²°ê³¼ê°€ ë” ì ìœ¼ë¯€ë¡œ ë“œë¼ì´ë¹™ ìˆœì„œ ë³€ê²½ -> D E
+- FROM Dì˜ ê²°ê³¼ê°€ í•„í„°ë¥¼ ì œì™¸í•˜ê³  ë” ì ê²Œ ë‚˜ì˜¬ ìˆ˜ ìžˆë„ë¡, INDEXë¡œ T_DEPT(D.LOC)ë¥¼ ì¶”ê°€.
+- FROM Eì˜ ê²°ê³¼ê°€ í•„í„°ë¥¼ ì œì™¸í•˜ê³  ë” ì ê²Œ ë‚˜ì˜¬ ìˆ˜ ìžˆë„ë¡, INDEXë¡œ T_EMP(E.DIV_CODE)ë¥¼ ì¶”ê°€. + ì´ë„ˆ í…Œì´ë¸”ìž„ìœ¼ë¡œ JOINì„ ìœ„í•œ INDEX KEYë¡œ E.DEPT_CODE ì¶”ê°€
 
 SOL);
 CREATE INDEX SQLP_JS.IX_T_DEPT_02 ON SQLP_JS.T_DEPT(LOC);
@@ -217,12 +217,12 @@ DROP INDEX SQLP_JS.IX_T_EMP_02 ;
 DROP INDEX SQLP_JS.IX_T_DEPT_02 ;
 
 
-# Áú¹®?
+# ì§ˆë¬¸?
 1)
    AND  E.DIV_CODE    = '01' 
    AND  D.LOC         = '01';
-   À§ Á¶°ÇÀ» »©°í ½ÇÇà ½ÃÄ×À» ¶§ ¿Ö BUFFER°¡ ÁÙÁö?
+   ìœ„ ì¡°ê±´ì„ ë¹¼ê³  ì‹¤í–‰ ì‹œì¼°ì„ ë•Œ ì™œ BUFFERê°€ ì¤„ì§€?
 2)
-  ¹®Á¦1¹øÀÇ Ç®ÀÌ ¿Ö...? ¾ÈÁÁÀ»±î..?
+  ë¬¸ì œ1ë²ˆì˜ í’€ì´ ì™œ...? ì•ˆì¢‹ì„ê¹Œ..?
 
 */
